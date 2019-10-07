@@ -1,0 +1,13 @@
+{
+    "name": "intracto/password-validator",
+    "description": "Symfony validation for Intracto's standard password policy",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan Decavele",
+            "email": "jandecavele@gmail.com"
+        }
+    ],
+    "require": {}
+}
