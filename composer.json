@@ -10,8 +10,9 @@
         }
     ],
     "require": {
-        "symfony/validator": "^4.3",
-        "symfony/security-core": "^4.3"
+        "symfony/validator": "^4",
+        "symfony/security-core": "^4",
+        "php": ">7.0"
     },
     "autoload": {
         "psr-4": {
