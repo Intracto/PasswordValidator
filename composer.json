@@ -11,8 +11,7 @@
     ],
     "require": {
         "symfony/validator": "^4",
-        "symfony/security-core": "^4",
-        "php": ">7.0"
+        "symfony/security-core": "^4"
     },
     "autoload": {
         "psr-4": {
