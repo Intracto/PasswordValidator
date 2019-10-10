@@ -33,7 +33,6 @@ A basic working example would be:
 
 /**
  * @Password(plainPasswordAccessor="getPlainPassword", plainPasswordProperty="plain_password")
- * @ORM\Entity
  */
 class User implements UserInterface
 {
