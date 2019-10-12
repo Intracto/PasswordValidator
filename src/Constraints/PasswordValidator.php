@@ -53,7 +53,7 @@ class PasswordValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (null !== $plainPasswordAccessor && $value->getUserName() === $stringValue) {
+        if (null !== $plainPasswordAccessor && false !== strpos($stringValue, $value->getUserName())) {
             $this->context
                 ->buildViolation($constraint->usernameMessage)
                 ->setInvalidValue($value)
