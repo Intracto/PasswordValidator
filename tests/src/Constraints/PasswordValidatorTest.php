@@ -18,6 +18,17 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
         $this->assertSame($passwordConstraint->usernameMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
     }
 
+    public function testNotContainsUserName()
+    {
+        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'HelloFoobarbaz1@example.comWorld');
+        $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
+
+        $this->validator->validate($user, $passwordConstraint);
+
+        $this->assertSame(1, $this->context->getViolations()->count());
+        $this->assertSame($passwordConstraint->usernameMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
+    }
+
     public function testLength()
     {
         $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'Foo1');
