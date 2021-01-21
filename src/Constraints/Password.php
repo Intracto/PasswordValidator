@@ -35,10 +35,6 @@ class Password extends Constraint
 
     public function __construct($options = null)
     {
-        if (!isset($options['plainPasswordAccessor']) || !isset($options['plainPasswordProperty'])) {
-            throw new MissingOptionsException('The plainPasswordAccessor and plainPasswordProperty options are required.', ['plainPasswordAccessor', 'plainPasswordProperty']);
-        }
-
         if (!isset($options['min'])) {
             $options['min'] = 8;
         }
@@ -50,8 +46,8 @@ class Password extends Constraint
         parent::__construct($options);
     }
 
-    public function getTargets(): string
+    public function getTargets(): array
     {
-        return self::CLASS_CONSTRAINT;
+        return [self::CLASS_CONSTRAINT, self::PROPERTY_CONSTRAINT];
     }
 }

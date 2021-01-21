@@ -4,6 +4,7 @@ declare(strict_types=1);
 use PasswordValidator\Constraints\Password;
 use PasswordValidator\Constraints\PasswordValidator;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Exception\MissingOptionsException;
 
 class PasswordValidatorTest extends \Symfony\Component\Validator\Test\ConstraintValidatorTestCase
 {
@@ -83,6 +84,17 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
         $this->validator->validate($user, $passwordConstraint);
         $this->assertNoViolation();
+    }
+
+
+    // Check whether class and property options are mixed
+    public function testInvalidUserConfiguration()
+    {
+        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'FOOBARBAZ1@example.com');
+        $passwordConstraint = new Password();
+
+        $this->expectException(MissingOptionsException::class);
+        $this->validator->validate($user, $passwordConstraint);
     }
 
     protected function createValidator()
