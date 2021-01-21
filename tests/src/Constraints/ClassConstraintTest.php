@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 use PasswordValidator\Constraints\Password;
 use PasswordValidator\Constraints\PasswordValidator;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Exception\MissingOptionsException;
 
 class PasswordValidatorTest extends \Symfony\Component\Validator\Test\ConstraintValidatorTestCase
@@ -39,7 +39,6 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
         $this->assertSame(1, $this->context->getViolations()->count());
         $this->assertSame($passwordConstraint->minMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
-
     }
 
     public function testNumber()
@@ -62,7 +61,6 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
         $this->assertSame(1, $this->context->getViolations()->count());
         $this->assertSame($passwordConstraint->upperCaseCharacterMissingMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
-
     }
 
     public function testLowerCase()
@@ -74,7 +72,6 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
         $this->assertSame(1, $this->context->getViolations()->count());
         $this->assertSame($passwordConstraint->lowerCaseCharacterMissingMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
-
     }
 
     public function testProperPassword()
@@ -85,7 +82,6 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
         $this->validator->validate($user, $passwordConstraint);
         $this->assertNoViolation();
     }
-
 
     // Check whether class and property options are mixed
     public function testInvalidUserConfiguration()

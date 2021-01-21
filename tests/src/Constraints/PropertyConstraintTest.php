@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use PasswordValidator\Constraints\Password;
@@ -15,7 +16,6 @@ class PropertyConstraintTest extends \Symfony\Component\Validator\Test\Constrain
 
         $this->assertSame(1, $this->context->getViolations()->count());
         $this->assertSame($passwordConstraint->minMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
-
     }
 
     public function testNumber()
@@ -37,7 +37,6 @@ class PropertyConstraintTest extends \Symfony\Component\Validator\Test\Constrain
 
         $this->assertSame(1, $this->context->getViolations()->count());
         $this->assertSame($passwordConstraint->upperCaseCharacterMissingMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
-
     }
 
     public function testLowerCase()
@@ -49,7 +48,6 @@ class PropertyConstraintTest extends \Symfony\Component\Validator\Test\Constrain
 
         $this->assertSame(1, $this->context->getViolations()->count());
         $this->assertSame($passwordConstraint->lowerCaseCharacterMissingMessage, $this->context->getViolations()->get(0)->getMessageTemplate());
-
     }
 
     public function testProperPassword()

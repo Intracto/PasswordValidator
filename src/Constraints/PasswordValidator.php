@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PasswordValidator\Constraints;
@@ -8,7 +9,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\MissingOptionsException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class PasswordValidator extends ConstraintValidator
 {
@@ -21,23 +21,21 @@ class PasswordValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Password) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Password');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Password');
         }
-
 
         if ($value instanceof UserInterface) {
             $plainPasswordAccessor = $constraint->plainPasswordAccessor;
             $this->plainPasswordProperty = $constraint->plainPasswordProperty;
 
-            if ($plainPasswordAccessor === null || $this->plainPasswordProperty === null) {
+            if (null === $plainPasswordAccessor || null === $this->plainPasswordProperty) {
                 throw new MissingOptionsException('The plainPasswordAccessor and plainPasswordProperty options are required when using the class constraint.', ['plainPasswordAccessor', 'plainPasswordProperty']);
             }
 
-            $stringValue = (string)$value->$plainPasswordAccessor();
+            $stringValue = (string) $value->$plainPasswordAccessor();
         } else {
-            $stringValue = (string)$value;
+            $stringValue = (string) $value;
         }
-
 
         $length = mb_strlen($stringValue);
 
@@ -45,9 +43,9 @@ class PasswordValidator extends ConstraintValidator
             $this->buildViolation(
                 $value,
                 $constraint->min === $constraint->max ? $constraint->exactMessage : $constraint->maxMessage,
-                ['{{ value }}' => $this->formatValue($stringValue), '{{ limit }}' => $constraint->max,]
+                ['{{ value }}' => $this->formatValue($stringValue), '{{ limit }}' => $constraint->max]
             )
-                ->setPlural((int)$constraint->max)
+                ->setPlural((int) $constraint->max)
                 ->setCode(Password::TOO_LONG_ERROR)
                 ->addViolation();
         }
@@ -55,9 +53,9 @@ class PasswordValidator extends ConstraintValidator
         if (null !== $constraint->min && $length < $constraint->min) {
             $this->buildViolation($value,
                 $constraint->min === $constraint->max ? $constraint->exactMessage : $constraint->minMessage,
-                ['{{ value }}' => $this->formatValue($stringValue), '{{ limit }}' => $constraint->min,]
+                ['{{ value }}' => $this->formatValue($stringValue), '{{ limit }}' => $constraint->min]
             )
-                ->setPlural((int)$constraint->min)
+                ->setPlural((int) $constraint->min)
                 ->setCode(Password::TOO_SHORT_ERROR)
                 ->addViolation();
         }
@@ -80,7 +78,6 @@ class PasswordValidator extends ConstraintValidator
             $this->buildViolation($value, $constraint->lowerCaseCharacterMissingMessage)->addViolation();
         }
 
-
         // Check whether there is at least one number present
         if (!\preg_match('/[0-9]/', $stringValue)) {
             $this->buildViolation($value, $constraint->numberMissingMessage)->addViolation();
@@ -90,7 +87,6 @@ class PasswordValidator extends ConstraintValidator
     private function buildViolation($value, string $message, array $parameters = [])
     {
         $isClassConstraint = $value instanceof UserInterface;
-
 
         $violation = $this->context->buildViolation($message);
         $violation->setInvalidValue($value);

@@ -1,11 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PasswordValidator\Constraints;
 
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Exception\MissingOptionsException;
 
 /**
  * @Annotation
@@ -14,7 +13,6 @@ class Password extends Constraint
 {
     const TOO_SHORT_ERROR = '9ff3fdc4-b214-49db-8718-39c315e33d45';
     const TOO_LONG_ERROR = 'd94b19cc-114f-4f44-9cc4-4138e80a87b9';
-
 
     protected static $errorNames = [
         self::TOO_SHORT_ERROR => 'TOO_SHORT_ERROR',
@@ -31,7 +29,6 @@ class Password extends Constraint
     public $plainPasswordProperty = null;
     public $max;
     public $min;
-
 
     public function __construct($options = null)
     {
