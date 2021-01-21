@@ -11,7 +11,8 @@
     ],
     "require": {
         "symfony/validator": "^4",
-        "symfony/security-core": "^4"
+        "symfony/security-core": "^4",
+        "friendsofphp/php-cs-fixer": "^2.18"
     },
     "autoload": {
         "psr-4": {
