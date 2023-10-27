@@ -21,7 +21,7 @@ class PasswordValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Password) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Password');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Password');
         }
 
         if ($value instanceof UserInterface) {
@@ -32,9 +32,9 @@ class PasswordValidator extends ConstraintValidator
                 throw new MissingOptionsException('The plainPasswordAccessor and plainPasswordProperty options are required when using the class constraint.', ['plainPasswordAccessor', 'plainPasswordProperty']);
             }
 
-            $stringValue = (string) $value->$plainPasswordAccessor();
+            $stringValue = (string)$value->$plainPasswordAccessor();
         } else {
-            $stringValue = (string) $value;
+            $stringValue = (string)$value;
         }
 
         $length = mb_strlen($stringValue);
@@ -45,7 +45,7 @@ class PasswordValidator extends ConstraintValidator
                 $constraint->min === $constraint->max ? $constraint->exactMessage : $constraint->maxMessage,
                 ['{{ value }}' => $this->formatValue($stringValue), '{{ limit }}' => $constraint->max]
             )
-                ->setPlural((int) $constraint->max)
+                ->setPlural((int)$constraint->max)
                 ->setCode(Password::TOO_LONG_ERROR)
                 ->addViolation();
         }
@@ -55,7 +55,7 @@ class PasswordValidator extends ConstraintValidator
                 $constraint->min === $constraint->max ? $constraint->exactMessage : $constraint->minMessage,
                 ['{{ value }}' => $this->formatValue($stringValue), '{{ limit }}' => $constraint->min]
             )
-                ->setPlural((int) $constraint->min)
+                ->setPlural((int)$constraint->min)
                 ->setCode(Password::TOO_SHORT_ERROR)
                 ->addViolation();
         }
@@ -91,7 +91,7 @@ class PasswordValidator extends ConstraintValidator
         $violation = $this->context->buildViolation($message);
         $violation->setInvalidValue($value);
         foreach ($parameters as $parameterKey => $parameter) {
-            $violation->setParameter($parameterKey, $parameter);
+            $violation->setParameter($parameterKey, (string)$parameter);
         }
 
         if ($isClassConstraint) {
