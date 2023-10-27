@@ -60,7 +60,7 @@ class PasswordValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if ($value instanceof UserInterface && false !== strpos($stringValue, $value->getUserName())) {
+        if ($value instanceof UserInterface && false !== strpos($stringValue, $value->getUserIdentifier())) {
             $this->context
                 ->buildViolation($constraint->usernameMessage)
                 ->setInvalidValue($value)

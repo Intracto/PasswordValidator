@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 use PasswordValidator\Constraints\Password;
 use PasswordValidator\Constraints\PasswordValidator;
+use Symfony\Component\Security\Core\User\InMemoryUser;
 use Symfony\Component\Validator\Exception\MissingOptionsException;
 
 class PasswordValidatorTest extends \Symfony\Component\Validator\Test\ConstraintValidatorTestCase
 {
     public function testNotEqualsUserName()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'Foobarbaz1@example.com');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'Foobarbaz1@example.com');
         $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
 
         $this->validator->validate($user, $passwordConstraint);
@@ -21,7 +22,7 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
     public function testNotContainsUserName()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'HelloFoobarbaz1@example.comWorld');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'HelloFoobarbaz1@example.comWorld');
         $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
 
         $this->validator->validate($user, $passwordConstraint);
@@ -32,7 +33,7 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
     public function testLength()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'Foo1');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'Foo1');
         $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
 
         $this->validator->validate($user, $passwordConstraint);
@@ -43,7 +44,7 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
     public function testNumber()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'Foobarbaz@example.com');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'Foobarbaz@example.com');
         $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
 
         $this->validator->validate($user, $passwordConstraint);
@@ -54,7 +55,7 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
     public function testUpperCase()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'foobarbaz1@example.com');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'foobarbaz1@example.com');
         $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
 
         $this->validator->validate($user, $passwordConstraint);
@@ -65,7 +66,7 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
     public function testLowerCase()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'FOOBARBAZ1');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'FOOBARBAZ1');
         $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
 
         $this->validator->validate($user, $passwordConstraint);
@@ -76,7 +77,7 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
 
     public function testProperPassword()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'FOOBARBAZ1@example.com');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'FOOBARBAZ1@example.com');
         $passwordConstraint = new Password(['plainPasswordAccessor' => 'getPassword', 'plainPasswordProperty' => 'password']);
 
         $this->validator->validate($user, $passwordConstraint);
@@ -86,7 +87,7 @@ class PasswordValidatorTest extends \Symfony\Component\Validator\Test\Constraint
     // Check whether class and property options are mixed
     public function testInvalidUserConfiguration()
     {
-        $user = new Symfony\Component\Security\Core\User\User('Foobarbaz1@example.com', 'FOOBARBAZ1@example.com');
+        $user = new InMemoryUser('Foobarbaz1@example.com', 'FOOBARBAZ1@example.com');
         $passwordConstraint = new Password();
 
         $this->expectException(MissingOptionsException::class);
